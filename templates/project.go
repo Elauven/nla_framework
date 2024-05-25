@@ -44,7 +44,9 @@ func WriteProjectFiles(p types.ProjectType, tmplMap map[string]*template.Templat
 	ReadTmplAndPrint(p, projectTmplPath+"/types/config.go", "/types", "config.go", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/webServer/main.go", "/webServer", "main.go", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/webServer/apiCallPgFunc.go", "/webServer", "apiCallPgFunc.go", nil)
-	ReadTmplAndPrint(p, projectTmplPath+"/webServer/webhook.go", "/webServer", "webhook.go", nil)
+	if len(p.Go.Webhooks) > 0 {
+		ReadTmplAndPrint(p, projectTmplPath+"/webServer/webhook.go", "/webServer", "webhook.go", nil)
+	}
 	ReadTmplAndPrint(p, projectTmplPath+"/webServer/auth/email.go", "/webServer/auth", "email.go", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/sql/initialData.sql", "/sql/template/function/", "initialData.sql", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/sql/user_trigger_before.sql", "/sql/template/function/_User/", "user_trigger_before.sql", nil)
