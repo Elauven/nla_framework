@@ -175,7 +175,6 @@ type (
 		HooksBeforeStartWebServer []string
 		MainGoImports             []string
 		Flags                     []ProjectGoFlag // дополнительные флаги для запуска приложения
-		Webhooks                  []string
 	}
 	ProjectRole struct {
 		Name   string
