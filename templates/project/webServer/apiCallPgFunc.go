@@ -20,6 +20,7 @@ type (
 		Roles      []string
 		Cache      PgMethodCache
 		BeforeHook func(*gin.Context, interface{}) error
+		AfterHook func(*gin.Context, interface{}) error
 	}
 	pgFuncCacheType struct {
 		Data        []byte
