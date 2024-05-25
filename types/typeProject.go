@@ -534,7 +534,7 @@ func (p *ProjectType) AddI18n(lang, prefix, key, value string) {
 	p.I18n.Data[lang][prefix][key] = value
 }
 
-func (p *ProjectType) PastContent(path string) string {
+func (p ProjectType) PastContent(path string) string {
 	content, err := os.ReadFile(path)
 	if err != nil {
 		fmt.Println(err.Error())
