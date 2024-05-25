@@ -2,10 +2,12 @@ package types
 
 import (
 	"fmt"
-	"github.com/Elauven/nla_framework/utils"
-	"github.com/serenize/snaker"
 	"log"
 	"strings"
+
+	"github.com/serenize/snaker"
+
+	"github.com/Elauven/nla_framework/utils"
 )
 
 // main.toml печать списка полей
@@ -31,7 +33,6 @@ func (d DocType) PrintSqlModelFlds() (res string) {
 
 // main.toml печать fk_constraints
 func (d DocType) PrintSqlModelFkConstraints() (res string) {
-
 	// формирование строчки для fkConstraints в случае если таблица является связью двух таблиц и эта связь уникальна
 	printSqlUniqLinkConstraint := func(d DocType) string {
 		flds := []FldType{}
@@ -266,7 +267,7 @@ func (d DocType) SearchTxt() string {
 		log.Fatalf("missed isSearch fld: %s", d.Name)
 	}
 	if len(arr) > 1 {
-		//concat(doc.description, ' ', doc.supplyer)
+		// concat(doc.description, ' ', doc.supplyer)
 		return fmt.Sprintf("concat(%s)", strings.Join(arr, `, '' '', `))
 	} else {
 		return fmt.Sprintf("doc.%s", arr[0])
@@ -334,7 +335,6 @@ func (d DocType) PrintSqlFuncUpdateQueryStr() string {
 
 // update функиця по добавлению execute insert
 func (d DocType) PrintSqlFuncInsertNew() (res string) {
-
 	//  индекс поля options для printLinkOnConflict
 	optionsFldIndex := 1
 	onConflictFldUpdateStr := ""
@@ -381,15 +381,15 @@ func (d DocType) PrintSqlFuncInsertNew() (res string) {
 		// для text[] своя форма записи
 		if f.Type == FldTypeTextArray {
 			paramStr = fmt.Sprintf("\t\t\ttext_array_from_json(params %s '%s')", arrow, f.Name)
-			//text_array_from_json(params -> 'role')
+			// text_array_from_json(params -> 'role')
 		}
 		if f.Type == FldTypeIntArray {
 			paramStr = fmt.Sprintf("\t\t\tint_array_from_json(params %s '%s')", arrow, f.Name)
-			//int_array_from_json(params -> 'role')
+			// int_array_from_json(params -> 'role')
 		}
 		if f.Type == FldTypeDoubleArray {
 			paramStr = fmt.Sprintf("\t\t\tdouble_array_from_json(params %s '%s')", arrow, f.Name)
-			//double_array_from_json(params -> 'role')
+			// double_array_from_json(params -> 'role')
 		}
 		// в случае наличия дефолтного значения делаем конструкцию coalesce
 		if len(f.Sql.Default) > 0 {
@@ -487,6 +487,7 @@ func (d DocType) GetBeforeTriggerDeclareVars() string {
 
 	return res
 }
+
 func (d DocType) GetBeforeTriggerFillRefVars() string {
 	if !d.Sql.IsSearchText {
 		return ""
@@ -540,6 +541,15 @@ func (ds *DocSql) FillBaseMethods(docName string, roles ...string) {
 	for _, name := range []string{"list", "update", "get_by_id"} {
 		name := docName + "_" + name
 		ds.Methods[name] = &DocSqlMethod{Name: name, Roles: roles}
+	}
+}
+
+func (ds *DocSql) AddWebhookForMethod(docName, webhookName string) {
+	if ds.Methods == nil {
+		return
+	}
+	if _, ok := ds.Methods[docName]; ok {
+		ds.Methods[docName].AfterHookName = webhookName
 	}
 }
 

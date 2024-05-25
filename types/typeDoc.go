@@ -3,11 +3,13 @@ package types
 import (
 	"errors"
 	"fmt"
-	"github.com/Elauven/nla_framework/utils"
-	"github.com/serenize/snaker"
 	"log"
 	"strings"
 	"text/template"
+
+	"github.com/serenize/snaker"
+
+	"github.com/Elauven/nla_framework/utils"
 )
 
 const (
@@ -32,7 +34,7 @@ type (
 		StateMachine         *DocSm
 		IsRecursion          bool // признак, что документ имеет рекурсию. Есть parent_id - ссылка на самого себя
 		Integrations         DocIntegrations
-		I18n                 map[string]map[string]string //RU : save: 'сохранить'
+		I18n                 map[string]map[string]string // RU : save: 'сохранить'
 	}
 
 	TmplPathOverride struct {
@@ -164,10 +166,11 @@ type (
 	}
 
 	DocSqlMethod struct {
-		Name   string
-		Roles  []string
-		Params map[string]string
-		Tmpl   DocSqlMethodTmpl
+		Name          string
+		Roles         []string
+		Params        map[string]string
+		Tmpl          DocSqlMethodTmpl
+		AfterHookName string
 	}
 
 	DocSqlMethodTmpl struct {

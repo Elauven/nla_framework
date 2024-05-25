@@ -474,11 +474,17 @@ func (p *ProjectType) FillLocalPath() string {
 func (p ProjectType) PrintApiCallPgFuncMethods() string {
 	res := ""
 	printPgMethod := func(m DocSqlMethod) {
-		var roles string
+		var (
+			roles         string
+			afterHookName string = "nil"
+		)
 		if len(m.Roles) > 0 {
 			roles = fmt.Sprintf(`"%s"`, strings.Join(m.Roles, `", "`))
 		}
-		res = fmt.Sprintf("%s\n\t\tPgMethod{\"%s\", []string{%s}, nil, BeforeHookAddUserId, nil},", res, m.Name, roles)
+		if m.AfterHookName != "" {
+			afterHookName = m.AfterHookName
+		}
+		res = fmt.Sprintf("%s\n\t\tPgMethod{\"%s\", []string{%s}, nil, BeforeHookAddUserId, %s},", res, m.Name, roles, afterHookName)
 	}
 	if project.Sql.Methods != nil {
 		for _, v := range project.Sql.Methods {
@@ -532,13 +538,4 @@ func (p *ProjectType) AddI18n(lang, prefix, key, value string) {
 		p.I18n.Data[lang][prefix] = map[string]string{}
 	}
 	p.I18n.Data[lang][prefix][key] = value
-}
-
-func (p ProjectType) PastContent(path string) string {
-	content, err := os.ReadFile(path)
-	if err != nil {
-		fmt.Println(err.Error())
-		return ""
-	}
-	return string(content)
 }
