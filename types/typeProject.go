@@ -3,7 +3,6 @@ package types
 import (
 	"fmt"
 	"go/build"
-	"io"
 	"log"
 	"os"
 	"path/filepath"
