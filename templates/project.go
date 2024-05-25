@@ -2,11 +2,12 @@ package templates
 
 import (
 	"fmt"
+	"strings"
+	"text/template"
+
 	"github.com/Elauven/nla_framework/templates/tmplGenerateStep2"
 	"github.com/Elauven/nla_framework/types"
 	"github.com/Elauven/nla_framework/utils"
-	"strings"
-	"text/template"
 )
 
 func WriteProjectFiles(p types.ProjectType, tmplMap map[string]*template.Template) {
@@ -43,6 +44,7 @@ func WriteProjectFiles(p types.ProjectType, tmplMap map[string]*template.Templat
 	ReadTmplAndPrint(p, projectTmplPath+"/types/config.go", "/types", "config.go", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/webServer/main.go", "/webServer", "main.go", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/webServer/apiCallPgFunc.go", "/webServer", "apiCallPgFunc.go", nil)
+	ReadTmplAndPrint(p, projectTmplPath+"/webServer/webhook.go", "/webServer", "webhook.go", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/webServer/auth/email.go", "/webServer/auth", "email.go", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/sql/initialData.sql", "/sql/template/function/", "initialData.sql", nil)
 	ReadTmplAndPrint(p, projectTmplPath+"/sql/user_trigger_before.sql", "/sql/template/function/_User/", "user_trigger_before.sql", nil)
@@ -113,12 +115,12 @@ func WriteProjectFiles(p types.ProjectType, tmplMap map[string]*template.Templat
 	// в случае коннекта к Битрикс генерим файлы
 	if p.IsBitrixIntegration() {
 		ReadTmplAndPrint(p, getCurrentDir()+"/integrations/bitrix/bitrixMain.go", "/bitrix", "main.go", nil)
-		//sourcePath := "../../../Elauven/nla_framework/templates/integrations/bitrix/bitrixMain.go"
-		//t, err := template.New("bitrixMain.go").Funcs(funcMap).Delims("[[", "]]").ParseFiles(sourcePath)
-		//utils.CheckErr(err, "bitrixMain.go")
-		//distPath := fmt.Sprintf("%s/bitrix", p.DistPath)
-		//err = ExecuteToFile(t, p, distPath, "main.go")
-		//utils.CheckErr(err, fmt.Sprintf("'project' ExecuteToFile '%s'", "bitrix/main.go"))
+		// sourcePath := "../../../Elauven/nla_framework/templates/integrations/bitrix/bitrixMain.go"
+		// t, err := template.New("bitrixMain.go").Funcs(funcMap).Delims("[[", "]]").ParseFiles(sourcePath)
+		// utils.CheckErr(err, "bitrixMain.go")
+		// distPath := fmt.Sprintf("%s/bitrix", p.DistPath)
+		// err = ExecuteToFile(t, p, distPath, "main.go")
+		// utils.CheckErr(err, fmt.Sprintf("'project' ExecuteToFile '%s'", "bitrix/main.go"))
 	}
 
 	// в случае коннекта к 1 Odata генерим файлы

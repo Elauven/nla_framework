@@ -2,13 +2,16 @@ package types
 
 import (
 	"fmt"
-	"github.com/Elauven/nla_framework/utils"
-	"github.com/serenize/snaker"
 	"go/build"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/serenize/snaker"
+
+	"github.com/Elauven/nla_framework/utils"
 )
 
 type (
@@ -126,7 +129,6 @@ type (
 		//           conditionFunc: (currentUser) => {
 		//                      return currentUser.id < 3
 		//                    }
-
 	}
 
 	VueConfig struct {
@@ -138,7 +140,7 @@ type (
 		DefaultLang string // по умолчанию ru-RU. Можно en-US и далее
 		IsExist     bool
 		LangList    []string
-		Data        map[string]map[string]map[string]string //RU : message : save: 'сохранить'
+		Data        map[string]map[string]map[string]string // RU : message : save: 'сохранить'
 	}
 
 	BitrixConfig struct {
@@ -174,6 +176,7 @@ type (
 		HooksBeforeStartWebServer []string
 		MainGoImports             []string
 		Flags                     []ProjectGoFlag // дополнительные флаги для запуска приложения
+		Webhooks                  []string
 	}
 	ProjectRole struct {
 		Name   string
@@ -282,7 +285,7 @@ func (p *ProjectType) FillVueFlds() {
 				p.Docs[i].Flds[j].Vue.IsRequired = fld.Sql.IsRequired
 			}
 			// заполняем незаполненные поля в extension
-			for k, _ := range fld.Vue.Ext {
+			for k := range fld.Vue.Ext {
 				// если в параметрах есть pathUrl и поле является Ref, это значит надо заполнить route к доккументу, на который идет ссылка + ссылка на аватарку
 				if k == "pathUrl" && len(fld.Sql.Ref) > 0 {
 					for _, dRef := range p.Docs {
@@ -465,7 +468,6 @@ func (p *ProjectType) FillLocalPath() string {
 			arr := strings.Split(strings.TrimSuffix(path, "/projectTemplate"), "/")
 			p.Config.LocalProjectPath = arr[len(arr)-1] + "/src"
 		}
-
 	}
 	return p.Config.LocalProjectPath
 }
@@ -477,7 +479,7 @@ func (p ProjectType) PrintApiCallPgFuncMethods() string {
 		if len(m.Roles) > 0 {
 			roles = fmt.Sprintf(`"%s"`, strings.Join(m.Roles, `", "`))
 		}
-		res = fmt.Sprintf("%s\n\t\tPgMethod{\"%s\", []string{%s}, nil, BeforeHookAddUserId},", res, m.Name, roles)
+		res = fmt.Sprintf("%s\n\t\tPgMethod{\"%s\", []string{%s}, nil, BeforeHookAddUserId, nil},", res, m.Name, roles)
 	}
 	if project.Sql.Methods != nil {
 		for _, v := range project.Sql.Methods {
@@ -531,4 +533,13 @@ func (p *ProjectType) AddI18n(lang, prefix, key, value string) {
 		p.I18n.Data[lang][prefix] = map[string]string{}
 	}
 	p.I18n.Data[lang][prefix][key] = value
+}
+
+func (p *ProjectType) PastContent(path string) string {
+	content, err := os.ReadFile(path)
+	if err != nil {
+		fmt.Println(err.Error())
+		return ""
+	}
+	return string(content)
 }
