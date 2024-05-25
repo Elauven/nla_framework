@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/pepelazz/nla_framework/utils"
+	"github.com/Elauven/nla_framework/utils"
 	"github.com/serenize/snaker"
 	"github.com/spf13/cast"
 	"log"

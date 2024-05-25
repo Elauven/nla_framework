@@ -3,7 +3,7 @@ package types
 import (
 	"errors"
 	"fmt"
-	"github.com/pepelazz/nla_framework/utils"
+	"github.com/Elauven/nla_framework/utils"
 	"github.com/serenize/snaker"
 	"log"
 	"strings"

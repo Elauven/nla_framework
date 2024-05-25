@@ -3,7 +3,7 @@ package pg
 import (
 	"database/sql"
 	"fmt"
-	"github.com/pepelazz/nla_framework/types"
+	"github.com/Elauven/nla_framework/types"
 	"github.com/pepelazz/pg_generate"
 )
 

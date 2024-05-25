@@ -2,9 +2,9 @@ package templates
 
 import (
 	"fmt"
-	"github.com/pepelazz/nla_framework/templates/tmplGenerateStep2"
-	"github.com/pepelazz/nla_framework/types"
-	"github.com/pepelazz/nla_framework/utils"
+	"github.com/Elauven/nla_framework/templates/tmplGenerateStep2"
+	"github.com/Elauven/nla_framework/types"
+	"github.com/Elauven/nla_framework/utils"
 	"strings"
 	"text/template"
 )
@@ -113,7 +113,7 @@ func WriteProjectFiles(p types.ProjectType, tmplMap map[string]*template.Templat
 	// в случае коннекта к Битрикс генерим файлы
 	if p.IsBitrixIntegration() {
 		ReadTmplAndPrint(p, getCurrentDir()+"/integrations/bitrix/bitrixMain.go", "/bitrix", "main.go", nil)
-		//sourcePath := "../../../pepelazz/nla_framework/templates/integrations/bitrix/bitrixMain.go"
+		//sourcePath := "../../../Elauven/nla_framework/templates/integrations/bitrix/bitrixMain.go"
 		//t, err := template.New("bitrixMain.go").Funcs(funcMap).Delims("[[", "]]").ParseFiles(sourcePath)
 		//utils.CheckErr(err, "bitrixMain.go")
 		//distPath := fmt.Sprintf("%s/bitrix", p.DistPath)

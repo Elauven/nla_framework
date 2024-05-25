@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
-	"github.com/pepelazz/nla_framework/types"
+	"github.com/Elauven/nla_framework/types"
 	"io/ioutil"
 	"log"
 	"mime/multipart"

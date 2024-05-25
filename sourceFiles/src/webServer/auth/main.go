@@ -2,8 +2,8 @@ package auth
 
 import (
 	"encoding/json"
-	"github.com/pepelazz/nla_framework/pg"
-	"github.com/pepelazz/nla_framework/types"
+	"github.com/Elauven/nla_framework/pg"
+	"github.com/Elauven/nla_framework/types"
 )
 
 var (

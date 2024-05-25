@@ -2,8 +2,8 @@ package templates
 
 import (
 	"fmt"
-	"github.com/pepelazz/nla_framework/types"
-	"github.com/pepelazz/nla_framework/utils"
+	"github.com/Elauven/nla_framework/types"
+	"github.com/Elauven/nla_framework/utils"
 	"github.com/serenize/snaker"
 	"text/template"
 )

@@ -1,8 +1,8 @@
 package templates
 
 import (
-	"github.com/pepelazz/nla_framework/utils"
-	t "github.com/pepelazz/nla_framework/types"
+	"github.com/Elauven/nla_framework/utils"
+	t "github.com/Elauven/nla_framework/types"
 	"text/template"
 )
 
