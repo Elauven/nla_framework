@@ -47,8 +47,11 @@ var (
 
 func apiCallPgFunc(c *gin.Context) {
 
-	var jsonParam JsonParamType
-	if v, ok := c.Get(utils.ContextJsonParam); !ok {
+	var (
+    jsonParam JsonParamType
+    pgMethod PgMethod
+  )
+  if v, ok := c.Get(utils.ContextJsonParam); !ok {
 		utils.HttpError(c, http.StatusMethodNotAllowed, "missed params")
 		return
 	} else {
@@ -111,6 +114,7 @@ func apiCallPgFunc(c *gin.Context) {
 					}
 				}
 			}
+      pgMethod = v
 			break
 		}
 	}
