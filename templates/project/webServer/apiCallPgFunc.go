@@ -142,7 +142,13 @@ func apiCallPgFunc(c *gin.Context) {
 	} else {
 		queryRes = cacheResult.Data
 	}
-
+  if pgMethod.AfterHook != nil {
+		err := pgMethod.AfterHook(c, gjson.Get(fmt.Sprintf("%s", queryRes), "result").Value())
+		if err != nil {
+			// utils.HttpError(c, http.StatusMethodNotAllowed, err.Error())
+			fmt.Println(err.Error())
+		}
+	}
 	//// логгирование обращений к сайту
 	//{
 	//	u, _ := c.Get(common.GinContextUser)

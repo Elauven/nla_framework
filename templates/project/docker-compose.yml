@@ -12,7 +12,6 @@ services:
     networks:
       - {{$projectNameSnake}}_net
     volumes:
-      - {{$serverPath}}/src/config.toml:/config.toml
       - {{$serverPath}}/image:/image
       - {{$serverPath}}/uploaded_files:/uploaded_files
       {{- range $volumes}}
